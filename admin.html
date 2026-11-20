@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,22 +9,67 @@
 </head>
 <body>
     <header>
+        <!-- logo -->
         <img class="logo" src="assets/img/logo.png" alt="logo">
-
+        <!-- boton de abrir -->
         <button  id="abrir" class="abrir-menu"><i class="bi bi-list"></i></button>
-
+        
         <nav class="nav" id="nav">
+            <!-- boton de cerrar -->
             <button class="cerrar-menu" id="cerrar"><i class="bi bi-x-circle-fill"></i></button>
+            <!-- enlaces -->
             <ul class="nav-list">
                 <li><a href="#">inicio</a></li>
                 <li><a href="#">propiedades</a></li>
                 <li><a href="#">reservas</a></li>
                 <li><a href="#">limpieza</a></li>
                 <li><a href="#">usuario</a></li>
-                <li><a href="#">cerrar sesión</a></li>
+                <li><a href="login.html">cerrar sesión</a></li>
             </ul>
         </nav>
     </header>
+    <!-- calendario -->
+<main class="contenido-principal">
+
+    <section class="seccion-calendario">
+
+        <div class="encabezado-calendario">
+            <h1>Calendario</h1>
+            <p>Control de reservas y servicios de limpieza</p>
+        </div>
+
+        <!-- Controles del calendario -->
+        <div class="controles-calendario">
+
+            <div class="navegacion-fechas">
+                <button id="anterior">Anterior</button>
+
+                <h2 id="fecha-actual">Noviembre 2026</h2>
+
+                <button id="siguiente">Siguiente</button>
+            </div>
+
+            <button id="hoy">Hoy</button>
+
+            <!-- Selección de vista -->
+            <div class="selector-vista">
+                <button id="vista-mensual" class="vista-activa">
+                    Mensual
+                </button>
+
+                <button id="vista-semanal">
+                    Semanal
+                </button>
+            </div>
+
+        </div>
+
+        <div id="calendario" class="calendario">
+        </div>
+
+    </section>
+
+</main>
 
     <script src="assets/js/admin.js"></script>
 </body>
