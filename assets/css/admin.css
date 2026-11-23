@@ -44,14 +44,6 @@ header{
     color: black;
 }
 
-
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
-}
-
 header{
     display: flex;
     align-items: center;
@@ -215,8 +207,8 @@ header{
 
 /* Casillas de fechas */
 
-.dia{
-    min-height: 90px;
+.dia {
+    min-height: 120px;
     padding: 8px;
     border: 1px solid #E5DED3;
     border-radius: 6px;
@@ -234,4 +226,62 @@ header{
 
 .dia-vacio{
     min-height: 90px;
+}
+
+/* VISTA SEMANAL */
+
+.calendario.vista-semanal{
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    align-items: stretch;
+}
+
+.calendario.vista-semanal .dia{
+    min-height: 220px;
+    padding: 12px 8px;
+}
+
+
+/* Número del día */
+.dia-numero {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+/* Contenedor de eventos */
+.dia-eventos {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* Estilo general */
+.evento {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 11px;
+    overflow-wrap: anywhere;
+}
+
+/* Reservas */
+.evento-reserva {
+    background-color: #E7F0FA;
+    color: #244D75;
+}
+
+/* Limpiezas */
+.evento-limpieza {
+    background-color: #E8F4E9;
+    color: #285D33;
+}
+
+/* Texto de los eventos */
+.evento strong {
+    font-size: 11px;
+}
+
+.evento small {
+    font-size: 10px;
 }

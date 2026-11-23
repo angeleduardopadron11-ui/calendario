@@ -33,6 +33,74 @@ let fechaSeleccionada = new Date(
     1
 );
 
+// Formatear una fecha como AAAA-MM-DD
+function fechaClave(fecha) {
+    const año = fecha.getFullYear();
+    const mes = String(fecha.getMonth() + 1).padStart(2, "0");
+    const dia = String(fecha.getDate()).padStart(2, "0");
+
+    return `${año}-${mes}-${dia}`;
+}
+
+// Datos de prueba
+const eventos = [
+    {
+        id: 1,
+        tipo: "reserva",
+        codigo: "R-001",
+        fecha: fechaClave(hoy),
+
+        inmueble: {
+            nombre: "Edificio Mar",
+            numero: "Apartamento 01",
+            ubicacion: "Badalona, España"
+        },
+
+        entrada: "20/11/2026",
+        salida: "23/11/2026",
+        hora: "11:00",
+        estado: "Confirmada"
+    },
+
+    {
+        id: 2,
+        tipo: "limpieza",
+        codigo: "L-001",
+        fecha: fechaClave(hoy),
+
+        inmueble: {
+            nombre: "Edificio Mar",
+            numero: "Apartamento 01",
+            ubicacion: "Badalona, España"
+        },
+
+        hora: "12:00",
+        empleado: "María",
+        estado: "Pendiente"
+    },
+
+    {
+        id: 3,
+        tipo: "reserva",
+        codigo: "R-002",
+        fecha: fechaClave(new Date(
+            hoy.getFullYear(),
+            hoy.getMonth(),
+            hoy.getDate() + 1
+        )),
+
+        inmueble: {
+            nombre: "Residencial Sol",
+            numero: "Apartamento 02",
+            ubicacion: "Badalona, España"
+        },
+
+        entrada: "23/11/2026",
+        salida: "24/11/2026",
+        hora: "10:00",
+        estado: "Confirmada"
+    }
+];
 
 function generarCalendario(){
 
@@ -98,7 +166,11 @@ function generarCalendario(){
 
         casilla.classList.add("dia");
 
-        casilla.textContent = dia;
+        const numeroDia = document.createElement("div");
+        numeroDia.classList.add("dia-numero");
+        numeroDia.textContent = dia;
+
+casilla.appendChild(numeroDia);
 
         // Identificamos el día actual
         if(
@@ -110,53 +182,84 @@ function generarCalendario(){
             casilla.classList.add("dia-hoy");
 
         }
-
+        mostrarEventos(casilla, new Date(año, mes, dia));
         calendario.appendChild(casilla);
 
     }
 
 }
+//* BOTÓN ANTERIOR *
 
- // BOTÓN MES ANTERIOR
 anterior.addEventListener("click", () => {
 
-    fechaSeleccionada.setMonth(
-        fechaSeleccionada.getMonth() - 1
-    );
+    if(tipoVista === "mensual"){
 
-    generarCalendario();
+        fechaSeleccionada.setMonth(
+            fechaSeleccionada.getMonth() - 1
+        );
+
+        generarCalendario();
+
+    } else {
+
+        fechaSeleccionada.setDate(
+            fechaSeleccionada.getDate() - 7
+        );
+
+        generarVistaSemanal();
+
+    }
 
 });
 
 
-// BOTÓN MES SIGUIENTE
+//* BOTÓN SIGUIENTE *
+
 siguiente.addEventListener("click", () => {
 
-    fechaSeleccionada.setMonth(
-        fechaSeleccionada.getMonth() + 1
-    );
+    if(tipoVista === "mensual"){
 
-    generarCalendario();
+        fechaSeleccionada.setMonth(
+            fechaSeleccionada.getMonth() + 1
+        );
+
+        generarCalendario();
+
+    } else {
+
+        fechaSeleccionada.setDate(
+            fechaSeleccionada.getDate() + 7
+        );
+
+        generarVistaSemanal();
+
+    }
 
 });
 
+//* BOTÓN HOY *
 
-// BOTÓN HOY
 botonHoy.addEventListener("click", () => {
 
     fechaSeleccionada = new Date(
         hoy.getFullYear(),
         hoy.getMonth(),
-        1
+        hoy.getDate()
     );
 
-    generarCalendario();
+    if(tipoVista === "mensual"){
+
+        generarCalendario();
+
+    } else if(tipoVista === "semanal"){
+
+        generarVistaSemanal();
+
+    }
 
 });
 
 
-// GENERAR CALENDARIO INICIAL
-generarCalendario();
 // BOTONES DE VISTA
 const vistaMensual = document.querySelector("#vista-mensual");
 const vistaSemanal = document.querySelector("#vista-semanal");
@@ -178,3 +281,158 @@ function obtenerInicioSemana(fecha){
     return inicio;
 }
 
+
+function generarVistaSemanal(){
+
+    // Obtenemos el lunes de la semana seleccionada
+    const inicioSemana = obtenerInicioSemana(fechaSeleccionada);
+
+    // Limpiamos el calendario
+    calendario.innerHTML = "";
+
+    // Nombres de los días
+    const diasSemana = [
+        "Lun", "Mar", "Mié", "Jue",
+        "Vie", "Sáb", "Dom"
+    ];
+
+    // Generamos los siete días
+    for(let i = 0; i < 7; i++){
+
+        // Calculamos la fecha correspondiente
+        const fecha = new Date(inicioSemana);
+
+        fecha.setDate(inicioSemana.getDate() + i);
+
+        // Creamos la casilla
+        const casilla = document.createElement("div");
+
+        casilla.classList.add("dia");
+
+        // Creamos el encabezado del día
+        const encabezado = document.createElement("div");
+
+        encabezado.classList.add("dia-semana");
+
+        encabezado.textContent =
+            diasSemana[i] + " " + fecha.getDate();
+
+        casilla.appendChild(encabezado);
+
+        // Identificamos el día actual
+        if(
+            fecha.getDate() === hoy.getDate() &&
+            fecha.getMonth() === hoy.getMonth() &&
+            fecha.getFullYear() === hoy.getFullYear()
+        ){
+
+            casilla.classList.add("dia-hoy");
+
+        }
+
+        mostrarEventos(casilla, fecha);
+
+        calendario.appendChild(casilla);
+
+    }
+
+    // Mostramos el rango de la semana
+    const finSemana = new Date(inicioSemana);
+
+    finSemana.setDate(inicioSemana.getDate() + 6);
+
+    const formatoFecha = new Intl.DateTimeFormat("es-ES", {
+        day: "numeric",
+        month: "long"
+    });
+
+    fechaActual.textContent =
+        formatoFecha.format(inicioSemana) +
+        " - " +
+        formatoFecha.format(finSemana);
+
+}
+
+//* CAMBIAR ENTRE VISTAS *
+
+function cambiarVista(vista){
+
+    tipoVista = vista;
+
+    if(tipoVista === "mensual"){
+
+        calendario.classList.remove("vista-semanal");
+
+        vistaMensual.classList.add("vista-activa");
+        vistaSemanal.classList.remove("vista-activa");
+
+        generarCalendario();
+
+    } else {
+
+        calendario.classList.add("vista-semanal");
+
+        vistaSemanal.classList.add("vista-activa");
+        vistaMensual.classList.remove("vista-activa");
+
+        generarVistaSemanal();
+
+    }
+
+}
+
+//* EVENTOS DE LOS BOTONES DE VISTA *
+
+vistaMensual.addEventListener("click", () => {
+    cambiarVista("mensual");
+});
+
+vistaSemanal.addEventListener("click", () => {
+    cambiarVista("semanal");
+});
+
+
+
+function mostrarEventos(casilla, fecha) {
+
+    const fechaBuscada = fechaClave(fecha);
+
+    const eventosDelDia = eventos.filter(evento =>
+        evento.fecha === fechaBuscada
+    );
+
+    const contenedor = document.createElement("div");
+    contenedor.classList.add("dia-eventos");
+
+    eventosDelDia.forEach(evento => {
+
+        const elemento = document.createElement("div");
+
+        elemento.classList.add("evento");
+        elemento.classList.add(`evento-${evento.tipo}`);
+
+        const titulo = document.createElement("strong");
+        titulo.textContent =
+            evento.tipo === "reserva" ? "Reserva" : "Limpieza";
+
+        const propiedad = document.createElement("small");
+
+        propiedad.textContent =
+            `${evento.inmueble.nombre} - ${evento.inmueble.numero}`;
+
+        const hora = document.createElement("small");
+        hora.textContent = evento.hora;
+
+        elemento.appendChild(titulo);
+        elemento.appendChild(propiedad);
+        elemento.appendChild(hora);
+
+        contenedor.appendChild(elemento);
+
+    });
+
+    casilla.appendChild(contenedor);
+}
+
+// GENERAR CALENDARIO INICIAL
+generarCalendario();
