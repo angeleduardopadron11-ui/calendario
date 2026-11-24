@@ -285,3 +285,80 @@ header{
 .evento small {
     font-size: 10px;
 }
+
+/* ventana modal */
+/* Ventana modal */
+
+.modal-evento {
+    width: 90%;
+    max-width: 500px;
+    margin: auto;
+    padding: 0;
+    border: none;
+    border-radius: 12px;
+    color: #292723;
+}
+
+.modal-evento::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem;
+    background-color: beige;
+}
+
+.modal-encabezado button {
+    border: none;
+    background: transparent;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+.modal-cuerpo {
+    padding: 1.5rem;
+}
+
+.modal-cuerpo h3 {
+    margin-bottom: 1rem;
+    color: #AF8D6A;
+}
+
+.detalle-evento {
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+
+/* ventana modal para el "ver más" */
+/* Botón ver más */
+
+.ver-mas-eventos {
+    border: none;
+    background: transparent;
+    color: #AF8D6A;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: left;
+    padding: 5px 2px;
+}
+
+.ver-mas-eventos:hover {
+    color: #806448;
+    text-decoration: underline;
+}
+
+/* Eventos dentro de la segunda ventana */
+
+.evento-lista {
+    margin-bottom: 10px;
+    padding: 12px;
+}
+
+.evento-lista:hover {
+    filter: brightness(0.96);
+}

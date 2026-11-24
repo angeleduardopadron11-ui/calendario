@@ -23,6 +23,19 @@ const anterior = document.querySelector("#anterior");
 const siguiente = document.querySelector("#siguiente");
 const botonHoy = document.querySelector("#hoy");
 
+//ventana modal de los detalles
+const modal = document.querySelector("#modal-evento");
+const cerrarModal = document.querySelector("#cerrar-modal");
+
+const modalTitulo = document.querySelector("#modal-titulo");
+const modalCodigo = document.querySelector("#modal-codigo");
+const modalContenido = document.querySelector("#modal-contenido");
+//ventana modal de las reservas y limpieza
+const modalListaEventos = document.querySelector("#modal-lista-eventos");
+const cerrarListaEventos = document.querySelector("#cerrar-lista-eventos");
+const fechaListaEventos = document.querySelector("#fecha-lista-eventos");
+const contenidoListaEventos = document.querySelector("#contenido-lista-eventos");
+
 // FECHA INICIAL
 
 const hoy = new Date();
@@ -99,7 +112,42 @@ const eventos = [
         salida: "24/11/2026",
         hora: "10:00",
         estado: "Confirmada"
-    }
+    },
+    
+    {
+    id: 4,
+    tipo: "reserva",
+    codigo: "R-004",
+    fecha: fechaClave(hoy),
+
+    inmueble: {
+        nombre: "Edificio Luna",
+        numero: "Apartamento 03",
+        ubicacion: "Badalona, España"
+    },
+
+    entrada: "24/11/2026",
+    salida: "26/11/2026",
+    hora: "13:00",
+    estado: "Confirmada"
+},
+
+{
+    id: 5,
+    tipo: "limpieza",
+    codigo: "L-002",
+    fecha: fechaClave(hoy),
+
+    inmueble: {
+        nombre: "Residencial Sol",
+        numero: "Apartamento 02",
+        ubicacion: "Badalona, España"
+    },
+
+    hora: "15:00",
+    empleado: "Laura",
+    estado: "Pendiente"
+},
 ];
 
 function generarCalendario(){
@@ -391,8 +439,7 @@ vistaSemanal.addEventListener("click", () => {
     cambiarVista("semanal");
 });
 
-
-
+//ventana modal para el "ver más"
 function mostrarEventos(casilla, fecha) {
 
     const fechaBuscada = fechaClave(fecha);
@@ -404,7 +451,10 @@ function mostrarEventos(casilla, fecha) {
     const contenedor = document.createElement("div");
     contenedor.classList.add("dia-eventos");
 
-    eventosDelDia.forEach(evento => {
+    // Mostramos solamente los primeros 3 eventos
+    const eventosVisibles = eventosDelDia.slice(0, 3);
+
+    eventosVisibles.forEach(evento => {
 
         const elemento = document.createElement("div");
 
@@ -412,6 +462,7 @@ function mostrarEventos(casilla, fecha) {
         elemento.classList.add(`evento-${evento.tipo}`);
 
         const titulo = document.createElement("strong");
+
         titulo.textContent =
             evento.tipo === "reserva" ? "Reserva" : "Limpieza";
 
@@ -420,19 +471,186 @@ function mostrarEventos(casilla, fecha) {
         propiedad.textContent =
             `${evento.inmueble.nombre} - ${evento.inmueble.numero}`;
 
+        const ubicacion = document.createElement("small");
+
+        ubicacion.textContent = evento.inmueble.ubicacion;
+
         const hora = document.createElement("small");
+
+        hora.textContent = evento.hora;
+
+        elemento.appendChild(titulo);
+        elemento.appendChild(propiedad);
+        elemento.appendChild(ubicacion);
+        elemento.appendChild(hora);
+
+        elemento.style.cursor = "pointer";
+
+        elemento.addEventListener("click", () => {
+            abrirModal(evento);
+        });
+
+        contenedor.appendChild(elemento);
+
+    });
+
+    // Comprobamos si existen más de 3 eventos
+    if (eventosDelDia.length > 3) {
+
+        const botonVerMas = document.createElement("button");
+
+        botonVerMas.type = "button";
+
+        botonVerMas.classList.add("ver-mas-eventos");
+
+        botonVerMas.textContent =
+            `+ ${eventosDelDia.length - 3} eventos más`;
+
+        botonVerMas.addEventListener("click", () => {
+            abrirListaEventos(fecha, eventosDelDia);
+        });
+
+        contenedor.appendChild(botonVerMas);
+
+    }
+
+    casilla.appendChild(contenedor);
+
+}
+function abrirListaEventos(fecha, eventosDelDia) {
+
+    // Formateamos la fecha
+    fechaListaEventos.textContent =
+        new Intl.DateTimeFormat("es-ES", {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        }).format(fecha);
+
+    // Limpiamos el contenido anterior
+    contenidoListaEventos.innerHTML = "";
+
+    // Recorremos todos los eventos del día
+    eventosDelDia.forEach(evento => {
+
+        const elemento = document.createElement("div");
+
+        elemento.classList.add("evento");
+        elemento.classList.add(`evento-${evento.tipo}`);
+        elemento.classList.add("evento-lista");
+
+        const titulo = document.createElement("strong");
+
+        titulo.textContent =
+            `${evento.tipo === "reserva" ? "Reserva" : "Limpieza"} · ${evento.codigo}`;
+
+        const propiedad = document.createElement("small");
+
+        propiedad.textContent =
+            `${evento.inmueble.nombre} - ${evento.inmueble.numero}`;
+
+        const hora = document.createElement("small");
+
         hora.textContent = evento.hora;
 
         elemento.appendChild(titulo);
         elemento.appendChild(propiedad);
         elemento.appendChild(hora);
 
-        contenedor.appendChild(elemento);
+        elemento.style.cursor = "pointer";
+
+        // Abrimos los detalles del evento seleccionado
+        elemento.addEventListener("click", () => {
+
+            modalListaEventos.close();
+
+            abrirModal(evento);
+
+        });
+
+        contenidoListaEventos.appendChild(elemento);
 
     });
 
-    casilla.appendChild(contenedor);
+    modalListaEventos.showModal();
+
 }
+cerrarListaEventos.addEventListener("click", () => {
+
+    modalListaEventos.close();
+
+});
+
+
+//* ABRIR VENTANA MODAL *
+
+function abrirModal(evento) {
+
+    modalTitulo.textContent =
+        evento.tipo === "reserva"
+        ? "Detalles de la reserva"
+        : "Detalles de la limpieza";
+
+    modalCodigo.textContent = evento.codigo;
+
+    modalContenido.innerHTML = "";
+
+    // Datos generales
+    const detalles = [
+        ["Inmueble", evento.inmueble.nombre],
+        ["Apartamento", evento.inmueble.numero],
+        ["Ubicación", evento.inmueble.ubicacion]
+    ];
+
+    // Datos específicos de cada evento
+    if (evento.tipo === "reserva") {
+
+        detalles.push(
+            ["Fecha de entrada", evento.entrada],
+            ["Fecha de salida", evento.salida],
+            ["Hora de salida", evento.hora],
+            ["Estado", evento.estado]
+        );
+
+    } else {
+
+        detalles.push(
+            ["Horario", evento.hora],
+            ["Empleado asignado", evento.empleado],
+            ["Estado", evento.estado]
+        );
+
+    }
+
+    //ventana modal
+    detalles.forEach(([etiqueta, valor]) => {
+
+        const detalle = document.createElement("div");
+
+        detalle.classList.add("detalle-evento");
+
+        const texto = document.createElement("p");
+
+        texto.textContent = `${etiqueta}: ${valor}`;
+
+        detalle.appendChild(texto);
+
+        modalContenido.appendChild(detalle);
+
+    });
+
+    modal.showModal();
+
+}
+
+
+//* CERRAR VENTANA MODAL *
+
+cerrarModal.addEventListener("click", () => {
+
+    modal.close();
+
+});
 
 // GENERAR CALENDARIO INICIAL
 generarCalendario();
