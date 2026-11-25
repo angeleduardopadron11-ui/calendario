@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mi perfil | BDN Calendar</title>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.2/font/bootstrap-icons.min.css">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="stylesheet" href="assets/css/perfil.css">
+</head>
+
+<body>
+
+    <!-- MENÚ HAMBURGUESA -->
+    <header>
+
+        <img class="logo" src="assets/img/logo.png" alt="logo">
+
+        <button id="abrir" class="abrir-menu" type="button">
+            <i class="bi bi-list"></i>
+        </button>
+
+        <nav class="nav" id="nav">
+
+            <button class="cerrar-menu" id="cerrar" type="button">
+                <i class="bi bi-x-circle-fill"></i>
+            </button>
+
+            <ul class="nav-list">
+                <li><a href="admin.html">inicio</a></li>
+                <li><a href="#">inmuebles</a></li>
+                <li><a href="admin.html#calendario">Calendario</a></li>
+                <li><a href="perfil.html">Mi Perfil</a></li>
+                <li><a href="login.html">cerrar sesión</a></li>
+            </ul>
+        </nav>
+
+    </header>
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="contenido-principal">
+        <section class="seccion-perfil">
+            <div class="encabezado-perfil">
+                <h1>Mi perfil</h1>
+                <p>Consulta y administra tu información personal.</p>
+            </div>
+            <!-- SEGURIDAD -->
+            <section class="tarjeta-perfil">
+                <h2>Seguridad</h2>
+
+                <div class="opcion-seguridad">
+                    <div>
+                        <h3>Contraseña</h3>
+                        <p>Mantén segura tu cuenta actualizando tu contraseña.</p>
+                    </div>
+                    <button type="button" id="cambiar-contrasena">
+                        Cambiar contraseña
+                    </button>
+                </div>
+            </section>
+        </section>
+
+        <!-- ventana modal -->
+        
+<!-- MODAL PARA CAMBIAR CONTRASEÑA -->
+<dialog id="modal-contrasena" class="modal-perfil">
+
+    <!-- ENCABEZADO -->
+    <div class="modal-encabezado">
+
+        <h2>Cambiar contraseña</h2>
+
+        <button type="button" id="cerrar-modal-contrasena">
+            &times;
+        </button>
+
+    </div>
+
+    <!-- CUERPO -->
+    <div class="modal-cuerpo">
+
+        <form id="form-contrasena">
+            
+
+            <div class="campo-modal">
+                <label for="contrasena-actual">
+                    Contraseña actual
+                </label>
+
+                <input
+                    type="password"
+                    id="contrasena-actual"
+                    required
+                >
+            </div>
+            <p id="mensaje-contrasena" class="mensaje-contrasena"></p>
+
+            <div class="campo-modal">
+                <label for="contrasena-nueva">
+                    Nueva contraseña
+                </label>
+
+                <input
+                    type="password"
+                    id="contrasena-nueva"
+                    required
+                >
+            </div>
+
+            <div class="campo-modal">
+                <label for="confirmar-contrasena">
+                    Confirmar nueva contraseña
+                </label>
+
+                <input
+                    type="password"
+                    id="confirmar-contrasena"
+                    required
+                >
+            </div>
+
+            <button type="submit">
+                Guardar nueva contraseña
+            </button>
+
+        </form>
+
+    </div>
+
+</dialog>
+    </main>
+
+    <script src="assets/js/perfil.js"></script>
+
+</body>
+</html>
