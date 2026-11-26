@@ -8,7 +8,8 @@ class Propiedad(models.Model):
     ]
     nombre = models.CharField(max_length=100)
     tipo = models.CharField(max_length=10, choices=TIPO_PROPIEDAD, default='PROPIA')
-    
+    descripcion = models.TextField(blank=True, null=True)
+    imagen = models.ImageField(upload_to='inmuebles/', blank=True, null=True)
     def __str__(self):
         return self.nombre
 

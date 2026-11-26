@@ -1,0 +1,265 @@
+ 
+        /* --- PALETA DE COLORES ELEGANTE --- */
+        :root {
+            --bg-crema: #F8F6F2; 
+            --dorado-elegante: #C6A869; 
+            --dorado-hover: #B39557;
+            --texto-oscuro: #2C2C2C; 
+            --texto-claro: #7A7A7A;
+            --blanco-puro: #FFFFFF;
+            --borde-sutil: #EBE6DF;
+        }
+
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: var(--bg-crema); 
+            margin: 0; 
+            padding: 0; 
+            color: var(--texto-oscuro);
+            -webkit-font-smoothing: antialiased; 
+        }
+
+        /* --- ESTILOS DEL MENÚ DE NAVEGACIÓN --- */
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: var(--blanco-puro);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            height: 50px; /* Ajusta según tu logo */
+        }
+
+        .abrir-menu {
+            background: transparent;
+            border: none;
+            font-size: 2rem;
+            color: var(--dorado-elegante);
+            cursor: pointer;
+            display: block; /* Siempre visible para abrirlo */
+        }
+
+        /* El panel lateral que se desliza */
+        .nav {
+            position: fixed;
+            top: 0;
+            right: -100%; /* Escondido a la derecha */
+            width: 300px;
+            height: 100vh;
+            background: var(--blanco-puro);
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            transition: right 0.4s ease; /* Animación de deslizamiento */
+            z-index: 1000;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        /* Cuando añadimos esta clase con JS, se muestra */
+        .nav.visible {
+            right: 0;
+        }
+
+        .cerrar-menu {
+            background: transparent;
+            border: none;
+            font-size: 2rem;
+            color: var(--texto-oscuro);
+            cursor: pointer;
+            display: block;
+            margin-left: auto;
+            margin-bottom: 30px;
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-list li {
+            margin-bottom: 20px;
+        }
+
+        .nav-list a {
+            text-decoration: none;
+            color: var(--texto-oscuro);
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .nav-list a:hover {
+            color: var(--dorado-elegante);
+        }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        header.text-center {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 { 
+            font-family: 'Playfair Display', serif; 
+            color: var(--dorado-elegante); 
+            font-size: 2.8rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        p.subtitulo {
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--texto-claro);
+            letter-spacing: 0.5px;
+        }
+
+        /* --- TARJETAS DE INMUEBLES --- */
+        .inmuebles-grid { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 40px; 
+            justify-content: center; 
+            margin-bottom: 70px;
+        }
+
+        .card-inmueble { 
+            background: var(--blanco-puro); 
+            border-radius: 4px; 
+            width: 340px; 
+            overflow: hidden; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04); 
+            border: 1px solid var(--borde-sutil);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .card-inmueble:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
+
+        .card-inmueble img { 
+            width: 100%; 
+            height: 240px; 
+            object-fit: cover; 
+        }
+
+        .card-body { 
+            padding: 25px; 
+        }
+
+        .card-title { 
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem; 
+            margin-bottom: 12px; 
+            color: var(--texto-oscuro);
+        }
+
+        .card-text { 
+            color: var(--texto-claro); 
+            font-size: 0.9rem; 
+            margin-bottom: 25px; 
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .card-text strong { font-weight: 500; color: var(--dorado-elegante); }
+
+        .btn-eliminar { 
+            background-color: transparent; 
+            color: #999; 
+            border: 1px solid #ddd; 
+            padding: 10px 15px; 
+            border-radius: 3px; 
+            cursor: pointer; 
+            width: 100%;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .btn-eliminar:hover { 
+            background-color: #fcfcfc;
+            color: #d9534f; 
+            border-color: #d9534f;
+        }
+
+        /* --- FORMULARIO ELEGANTE --- */
+        .form-nuevo { 
+            background: var(--blanco-puro); 
+            padding: 40px; 
+            border-radius: 4px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04); 
+            max-width: 600px; 
+            margin: 0 auto;
+            border-top: 3px solid var(--dorado-elegante); 
+        }
+
+        .form-nuevo h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--texto-oscuro);
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+
+        .form-nuevo label {
+            font-size: 0.85rem;
+            color: var(--texto-claro);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-nuevo input, .form-nuevo textarea, .form-nuevo select { 
+            width: 100%; 
+            padding: 12px 15px; 
+            margin-bottom: 25px; 
+            border: 1px solid #E0E0E0; 
+            border-radius: 3px; 
+            box-sizing: border-box; 
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            background-color: #FAFAFA;
+            transition: border-color 0.3s;
+        }
+
+        .form-nuevo input:focus, .form-nuevo textarea:focus, .form-nuevo select:focus {
+            outline: none;
+            border-color: var(--dorado-elegante);
+            background-color: var(--blanco-puro);
+        }
+
+        .btn-guardar { 
+            background: var(--dorado-elegante); 
+            color: var(--blanco-puro); 
+            border: none; 
+            padding: 15px; 
+            border-radius: 3px; 
+            cursor: pointer; 
+            width: 100%; 
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: background 0.3s;
+        }
+
+        .btn-guardar:hover { background: var(--dorado-hover); }
+    

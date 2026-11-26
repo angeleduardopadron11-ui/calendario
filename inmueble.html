@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Inmuebles | BDNAPARTMENTS</title>
+    
+    <!-- Fuentes elegantes -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Iconos de Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    
+    <!-- ¡AQUÍ ENLAZAMOS TU NUEVO CSS! -->
+    <link rel="stylesheet" href="assets/css/inmueble.css">
+</head>
+<body>
+
+    <!-- BARRA SUPERIOR CON LOGO Y BOTÓN DE MENÚ -->
+    <div class="header-top">
+        <img class="logo" src="assets/img/logo.png" alt="logo">
+        <button id="abrir" class="abrir-menu"><i class="bi bi-list"></i></button>
+    </div>
+
+    <!-- PANEL LATERAL DEL MENÚ -->
+    <nav class="nav" id="nav">
+        <button class="cerrar-menu" id="cerrar"><i class="bi bi-x-lg"></i></button>
+        <ul class="nav-list">
+            <li><a href="admin.html">Panel Admin</a></li>
+            <li><a href="inmueble.html">Inmuebles</a></li>
+            <li><a href="#">Calendario</a></li>
+            <li><a href="login.html">Cerrar Sesión</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <header class="text-center">
+            <h1>Gestión de Inmuebles</h1>
+            <p class="subtitulo">Administra las propiedades propias y de terceros de BDNAPARTMENTS.</p>
+        </header>
+
+        <!-- Contenedor de las tarjetas -->
+        <div class="inmuebles-grid" id="lista-inmuebles"></div>
+
+        <!-- Formulario para añadir un nuevo inmueble -->
+        <div class="form-nuevo">
+            <h2>Añadir Propiedad</h2>
+            <form id="form-inmueble" enctype="multipart/form-data">
+                <label>Nombre del inmueble</label>
+                <input type="text" id="nombre" placeholder="Ej. Ático en el centro" required>
+                
+                <label>Descripción</label>
+                <textarea id="descripcion" placeholder="Detalles del inmueble..." required rows="3"></textarea>
+                
+                <label>Tipo de propiedad</label>
+                <select id="tipo">
+                    <option value="PROPIA">Propia</option>
+                    <option value="TERCEROS">De Terceros</option>
+                </select>
+
+                <label>Fotografía principal</label>
+                <input type="file" id="imagen" accept="image/*" required style="padding: 10px;">
+                
+                <button type="submit" class="btn-guardar">Guardar Inmueble</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // --- LÓGICA DEL MENÚ HAMBURGUESA ---
+        const nav = document.querySelector("#nav");
+        const abrir = document.querySelector("#abrir");
+        const cerrar = document.querySelector("#cerrar");
+
+        abrir.addEventListener("click", () => {
+            nav.classList.add("visible"); // Añade la clase que lo hace visible
+        });
+
+        cerrar.addEventListener("click", () => {
+            nav.classList.remove("visible"); // Quita la clase para esconderlo
+        });
+
+        // --- LÓGICA DE LA API (Inmuebles) ---
+        const API_URL = 'http://127.0.0.1:8000/api/inmuebles/';
+        const contenedor = document.getElementById('lista-inmuebles');
+
+        async function cargarInmuebles() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                
+                contenedor.innerHTML = ''; 
+                if (data.length === 0) {
+                    contenedor.innerHTML = '<p style="color:#7A7A7A;">No hay inmuebles registrados aún.</p>';
+                    return;
+                }
+
+                data.forEach(prop => {
+                    contenedor.innerHTML += `
+                        <div class="card-inmueble" id="card-${prop.id}">
+                            <img src="${prop.imagen}" alt="${prop.nombre}">
+                            <div class="card-body">
+                                <div class="card-title">${prop.nombre}</div>
+                                <div class="card-text">
+                                    <strong>${prop.tipo}</strong><br><br>
+                                    ${prop.descripcion || 'Sin descripción detallada.'}
+                                </div>
+                                <button class="btn-eliminar" onclick="eliminarInmueble(${prop.id})">Eliminar</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                console.error("Error:", error);
+                contenedor.innerHTML = '<p style="color:red; text-align:center; width:100%;">Error al conectar con la base de datos. Verifica que Django esté encendido y CORS configurado.</p>';
+            }
+        }
+
+        document.getElementById('form-inmueble').addEventListener('submit', async (e) => {
+            e.preventDefault(); 
+            
+            const formData = new FormData();
+            formData.append('nombre', document.getElementById('nombre').value);
+            formData.append('descripcion', document.getElementById('descripcion').value);
+            formData.append('tipo', document.getElementById('tipo').value);
+            formData.append('imagen', document.getElementById('imagen').files[0]);
+
+            try {
+                await fetch(API_URL + 'crear/', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                document.getElementById('form-inmueble').reset(); 
+                cargarInmuebles(); 
+            } catch (error) {
+                console.error("Error al crear:", error);
+            }
+        });
+
+        async function eliminarInmueble(id) {
+            if(confirm('¿Seguro que deseas eliminar este inmueble?')) {
+                try {
+                    await fetch(API_URL + 'eliminar/' + id + '/', { method: 'DELETE' });
+                    cargarInmuebles(); 
+                } catch (error) {
+                    console.error("Error al eliminar:", error);
+                }
+            }
+        }
+
+        // Inicializar
+        cargarInmuebles();
+    </script>
+</body>
+</html>
