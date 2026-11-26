@@ -25,7 +25,6 @@
                 <li><a href="#">inicio</a></li>
                 <li><a href="#">inmuebles</a></li>
                 <li><a href="#calendario">Calendario</a></li>
-                <li><a href="perfil.html">Mi Perfil</a></li>
                 <li><a href="login.html">cerrar sesión</a></li>
             </ul>
         </nav>
@@ -89,17 +88,29 @@
         </button>
 
     </div>
+    <!-- Editar o cancelar reservas -->
+<div class="modal-cuerpo">
 
-    <div class="modal-cuerpo">
+    <h3 id="modal-codigo"></h3>
 
-        <h3 id="modal-codigo"></h3>
+    <div id="modal-contenido"></div>
 
-        <div id="modal-contenido"></div>
+    <div id="acciones-reserva" class="acciones-reserva" hidden>
+
+        <button type="button" id="editar-reserva">
+            <i class="bi bi-pen-fill"></i>
+            Editar reserva
+        </button>
+
+        <button type="button" id="cancelar-reserva">
+            <i class="bi bi-x-circle"></i>
+            Cancelar reserva
+        </button>
 
     </div>
 
+</div>
 </dialog>
-
 
     <!-- ventana modal de las reservas y limpieza -->
 <dialog id="modal-lista-eventos" class="modal-evento">
@@ -123,6 +134,66 @@
     </div>
 
 </dialog>
+
+<!-- tercera ventana modal para editar las reservas -->
+    
+<!-- Ventana modal para editar reservas -->
+<dialog id="modal-editar-reserva" class="modal-evento">
+
+    <div class="modal-encabezado">
+
+        <h2>Editar reserva</h2>
+
+        <button type="button" id="cerrar-edicion">
+            &times;
+        </button>
+
+    </div>
+
+    <div class="modal-cuerpo">
+
+        <h3 id="codigo-edicion"></h3>
+
+        <form id="form-editar-reserva">
+
+            <div class="campo-edicion">
+                <label for="fecha-entrada">Fecha de entrada</label>
+                <input type="date" id="fecha-entrada" required>
+            </div>
+
+            <div class="campo-edicion">
+                <label for="fecha-salida">Fecha de salida</label>
+                <input type="date" id="fecha-salida" required>
+            </div>
+
+            <div class="campo-edicion">
+                <label for="hora-entrada">Hora de entrada</label>
+                <input type="time" id="hora-entrada" required>
+            </div>
+
+            <div class="campo-edicion">
+                <label for="hora-salida">Hora de salida</label>
+                <input type="time" id="hora-salida" required>
+            </div>
+
+            <div class="acciones-edicion">
+
+                <button type="button" id="cancelar-edicion">
+                    Volver
+                </button>
+
+                <button type="submit" id="guardar-cambios">
+                    Guardar cambios
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</dialog>
+
 
     <script src="assets/js/admin.js"></script>
 </body>

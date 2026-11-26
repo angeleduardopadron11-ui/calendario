@@ -30,6 +30,14 @@ const cerrarModal = document.querySelector("#cerrar-modal");
 const modalTitulo = document.querySelector("#modal-titulo");
 const modalCodigo = document.querySelector("#modal-codigo");
 const modalContenido = document.querySelector("#modal-contenido");
+
+//editar y eliminar reservas
+const accionesReserva = document.querySelector("#acciones-reserva");
+const botonEditarReserva = document.querySelector("#editar-reserva");
+const botonCancelarReserva = document.querySelector("#cancelar-reserva");
+
+// Reserva que el administrador está consultando
+let eventoSeleccionado = null;
 //ventana modal de las reservas y limpieza
 const modalListaEventos = document.querySelector("#modal-lista-eventos");
 const cerrarListaEventos = document.querySelector("#cerrar-lista-eventos");
@@ -445,7 +453,8 @@ function mostrarEventos(casilla, fecha) {
     const fechaBuscada = fechaClave(fecha);
 
     const eventosDelDia = eventos.filter(evento =>
-        evento.fecha === fechaBuscada
+    evento.fecha === fechaBuscada &&
+    evento.estado !== "Cancelada"
     );
 
     const contenedor = document.createElement("div");
@@ -586,11 +595,14 @@ cerrarListaEventos.addEventListener("click", () => {
 
 function abrirModal(evento) {
 
+    eventoSeleccionado = evento;
+
+    accionesReserva.hidden = evento.tipo !== "reserva";
+
     modalTitulo.textContent =
         evento.tipo === "reserva"
         ? "Detalles de la reserva"
         : "Detalles de la limpieza";
-
     modalCodigo.textContent = evento.codigo;
 
     modalContenido.innerHTML = "";
@@ -651,6 +663,39 @@ cerrarModal.addEventListener("click", () => {
     modal.close();
 
 });
+
+botonCancelarReserva.addEventListener("click", () => {
+
+    // Verificar que exista una reserva seleccionada
+    if (!eventoSeleccionado || eventoSeleccionado.tipo !== "reserva") {
+        return;
+    }
+
+    // Solicitar confirmación
+    const confirmar = confirm(
+        `¿Estás segura de que deseas cancelar la reserva ${eventoSeleccionado.codigo}?`
+    );
+
+    if (!confirmar) {
+        return;
+    }
+
+    // Cambiar el estado de la reserva
+    eventoSeleccionado.estado = "Cancelada";
+
+    // Cerrar la ventana modal
+    modal.close();
+
+    // Actualizar el calendario
+    if (tipoVista === "mensual") {
+        generarCalendario();
+    } else {
+        generarVistaSemanal();
+    }
+
+    alert("La reserva ha sido cancelada correctamente.");
+});
+
 
 // GENERAR CALENDARIO INICIAL
 generarCalendario();

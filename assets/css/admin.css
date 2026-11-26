@@ -370,3 +370,75 @@ header{
 #exportar-pdf:hover {
     background-color: #806448;
 }
+
+/* botones de editar o cancelar reserva */
+
+/* Contenedor de botones de acciones */
+.acciones-reserva {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+/* Estilo general de los botones */
+.acciones-reserva button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: background-color 0.3s ease,
+                transform 0.2s ease;
+}
+
+/* Botón editar reserva */
+#editar-reserva {
+    background-color: #AF8D6A;
+    color: white;
+}
+
+#editar-reserva:hover {
+    background-color: #806448;
+    transform: translateY(-2px);
+}
+
+/* Botón cancelar reserva */
+#cancelar-reserva {
+    background-color: #F8E5E3;
+    color: #A33D35;
+}
+
+#cancelar-reserva:hover {
+    background-color: #F0D0CC;
+    transform: translateY(-2px);
+}
+
+/* Tamaño de los iconos */
+.acciones-reserva i {
+    font-size: 16px;
+}
+
+/* Botón cerrar del modal */
+.modal-encabezado button {
+    color: #696259;
+    transition: color 0.2s ease;
+}
+
+.modal-encabezado button:hover {
+    color: #AF8D6A;
+}
+
+/* Ocultar botones cuando el evento no sea una reserva */
+.acciones-reserva[hidden] {
+    display: none !important;
+}
