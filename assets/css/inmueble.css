@@ -1,4 +1,4 @@
- 
+
         /* --- PALETA DE COLORES ELEGANTE --- */
         :root {
             --bg-crema: #F8F6F2; 
@@ -30,7 +30,7 @@
         }
 
         .logo {
-            height: 50px; /* Ajusta según tu logo */
+            max-width: 5rem; /* Ajusta según tu logo */
         }
 
         .abrir-menu {
