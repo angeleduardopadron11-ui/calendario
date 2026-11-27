@@ -1,0 +1,339 @@
+
+/* =================================
+   ESTILOS GENERALES
+================================= */
+
+body {
+    background-color: #FEFAF3;
+    color: #292723;
+    font-family: sans-serif;
+}
+
+/* =================================
+   ENCABEZADO Y MENÚ
+================================= */
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #FFFFFF;
+}
+
+/* Menú lateral abierto */
+.nav.nav-visible {
+    right: 0;
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+/* =================================
+   CONTENEDOR PRINCIPAL
+================================= */
+
+.contenedor-reservas {
+    padding: 2rem;
+}
+
+/* =================================
+   ENCABEZADO DE LA PÁGINA
+================================= */
+
+.encabezado-pagina {
+    margin-bottom: 2rem;
+}
+
+.encabezado-pagina h1 {
+    font-size: 1.8rem;
+    color: #292723;
+    margin-bottom: .5rem;
+}
+
+.encabezado-pagina p {
+    color: #696259;
+}
+
+/* =================================
+   BOTÓN NUEVA RESERVA
+================================= */
+
+.acciones-reservas {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.5rem;
+}
+
+.btn-nueva-reserva {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #AF8D6A;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color .3s ease;
+}
+
+.btn-nueva-reserva:hover {
+    background-color: #806448;
+}
+
+/* listado de reservas */
+.seccion-listado h2 {
+    font-size: 1.3rem;
+    color: #292723;
+    margin-bottom: 1.2rem;
+}
+
+.lista-reservas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+/* tarjeta de reservas */
+.card-reserva {
+    background-color: #FFFFFF;
+    border: 1px solid #E5DED3;
+    border-radius: 12px;
+    padding: 1.3rem;
+    box-shadow: 0 4px 12px rgba(41, 39, 35, 0.06);
+    transition: transform .2s ease,
+                box-shadow .2s ease;
+}
+
+.card-reserva:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 18px rgba(41, 39, 35, 0.10);
+}
+
+/* Encabezado de la tarjeta */
+
+.reserva-encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.reserva-codigo {
+    color: #806448;
+    font-size: .85rem;
+    font-weight: bold;
+}
+
+/* Estado de la reserva */
+
+.estado-reserva {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: .75rem;
+    font-weight: bold;
+    background-color: #E8F4E9;
+    color: #285D33;
+}
+
+/* Información */
+
+.reserva-inmueble {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #292723;
+}
+
+.reserva-detalles {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #696259;
+    font-size: .9rem;
+}
+
+.reserva-detalles p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Acciones */
+
+.botones-reserva {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 1.3rem;
+    padding-top: 1rem;
+    border-top: 1px solid #E5DED3;
+}
+
+.botones-reserva button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: .8rem;
+}
+
+/* Botón ver detalles */
+
+.btn-detalles {
+    background-color: #F3E9DC;
+    color: #806448;
+}
+
+/* Botón editar */
+
+.btn-editar {
+    background-color: #AF8D6A;
+    color: white;
+}
+
+/* Botón cancelar */
+
+.btn-cancelar {
+    background-color: #F8E5E3;
+    color: #A33D35;
+}
+
+.btn-detalles:hover,
+.btn-editar:hover,
+.btn-cancelar:hover {
+    filter: brightness(.95);
+}
+
+
+/* =================================
+   VENTANA MODAL DE RESERVAS
+================================= */
+
+.modal-reserva {
+    width: 90%;
+    max-width: 550px;
+    max-height: 90vh;
+    margin: auto;
+    padding: 0;
+    border: none;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    color: #292723;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+    overflow: auto;
+}
+
+/* Fondo oscuro detrás de la ventana */
+
+.modal-reserva::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Encabezado del modal */
+
+.modal-reserva .modal-encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 1.5rem;
+    background-color: #F3E9DC;
+}
+
+.modal-reserva .modal-encabezado h2 {
+    font-size: 1.3rem;
+    color: #806448;
+}
+
+.modal-reserva .modal-encabezado button {
+    border: none;
+    background: transparent;
+    color: #696259;
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+.modal-reserva .modal-encabezado button:hover {
+    color: #AF8D6A;
+}
+
+/* Formulario */
+
+.form-reserva {
+    padding: 1.5rem;
+}
+
+.campo-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 1.2rem;
+}
+
+.campo-formulario label {
+    font-size: .9rem;
+    font-weight: bold;
+    color: #696259;
+}
+
+.campo-formulario input,
+.campo-formulario select {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid #E5DED3;
+    border-radius: 7px;
+    background-color: #FEFAF3;
+    color: #292723;
+    font-size: .95rem;
+    outline: none;
+}
+
+.campo-formulario input:focus,
+.campo-formulario select:focus {
+    border-color: #AF8D6A;
+    background-color: #FFFFFF;
+}
+
+/* Botones del formulario */
+
+.acciones-formulario {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 1.8rem;
+}
+
+.acciones-formulario button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 7px;
+    font-size: .9rem;
+    cursor: pointer;
+    transition: background-color .3s ease;
+}
+
+/* Cancelar */
+
+#cancelar-formulario {
+    background-color: #F3E9DC;
+    color: #806448;
+}
+
+#cancelar-formulario:hover {
+    background-color: #E5D5C1;
+}
+
+/* Guardar */
+
+.acciones-formulario .btn-guardar {
+    background-color: #AF8D6A;
+    color: #FFFFFF;
+}
+
+.acciones-formulario .btn-guardar:hover {
+    background-color: #806448;
+}

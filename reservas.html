@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Reservas | BDN Apartments</title>
+
+    <!-- Iconos -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.2/font/bootstrap-icons.min.css">
+    <!-- Estilos -->
+    <link rel="stylesheet" href="assets/css/inmueble.css">
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="stylesheet" href="assets/css/reservas.css">
+
+</head>
+<body>
+
+    <!-- ENCABEZADO -->
+    <header class="header-top">
+
+        <img
+            class="logo"
+            src="assets/img/logo.png"
+            alt="BDN Apartments"
+        >
+
+        <button id="abrir" class="abrir-menu">
+            <i class="bi bi-list"></i>
+        </button>
+
+    </header>
+
+
+    <!-- MENÚ DE NAVEGACIÓN -->
+    <nav class="nav" id="nav">
+
+        <button class="cerrar-menu" id="cerrar">
+            <i class="bi bi-x-lg"></i>
+        </button>
+
+        <ul class="nav-list">
+
+            <li><a href="admin.html">Calendario</a></li>
+
+            <li><a href="inmueble.html">Inmuebles</a></li>
+
+            <li><a href="reservas.html">Reservas</a></li>
+
+            <li><a href="login.html">Cerrar sesión</a></li>
+
+        </ul>
+
+    </nav>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="contenedor-reservas">
+
+        <header class="encabezado-pagina">
+
+            <h1>Gestión de Reservas</h1>
+
+            <p>
+                Administra las reservas de los inmuebles de BDN Apartments.
+            </p>
+
+        </header>
+
+
+        <!-- BOTÓN PARA AGREGAR RESERVA -->
+        <section class="acciones-reservas">
+
+            <button id="nueva-reserva" class="btn-nueva-reserva">
+
+                <i class="bi bi-plus-circle"></i>
+
+                Nueva reserva
+
+            </button>
+
+        </section>
+
+
+        <!-- LISTADO DE RESERVAS -->
+        <section class="seccion-listado">
+
+            <h2>Reservas registradas</h2>
+
+            <div id="lista-reservas" class="lista-reservas">
+
+                <!-- Aquí aparecerán las reservas mediante JavaScript -->
+
+            </div>
+
+        </section>
+        
+<!-- VENTANA MODAL: NUEVA RESERVA -->
+
+<dialog id="modal-reserva" class="modal-reserva">
+
+    <div class="modal-encabezado">
+        <h2>Nueva reserva</h2>
+
+        <button type="button" id="cerrar-modal">
+            <i class="bi bi-x-lg"></i>
+        </button>
+    </div>
+
+    <form id="form-reserva" class="form-reserva">
+
+        <div class="campo-formulario">
+            <label for="inmueble">Inmueble</label>
+            <select id="inmueble" required>
+                <option value="">Seleccionar inmueble</option>
+                <option value="Apartamento Barcelona 01">
+                    Apartamento Barcelona 01
+                </option>
+                <option value="Apartamento Barcelona 02">
+                    Apartamento Barcelona 02
+                </option>
+            </select>
+        </div>
+
+        <div class="campo-formulario">
+            <label for="fecha-entrada">Fecha de entrada</label>
+            <input type="date" id="fecha-entrada" required>
+        </div>
+
+        <div class="campo-formulario">
+            <label for="fecha-salida">Fecha de salida</label>
+            <input type="date" id="fecha-salida" required>
+        </div>
+
+        <div class="campo-formulario">
+    <label>Hora de salida</label>
+
+    <div class="selector-hora">
+
+        <select id="hora" required>
+            <option value="">Hora</option>
+        </select>
+
+        <select id="minutos" required>
+            <option value="">Minutos</option>
+        </select>
+
+        <select id="periodo" required>
+            <option value="">AM/PM</option>
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+        </select>
+
+    </div>
+</div>
+
+        <div class="acciones-formulario">
+            <button type="button" id="cancelar-formulario">
+                Cancelar
+            </button>
+
+            <button type="submit" class="btn-guardar">
+                <i class="bi bi-check-circle"></i>
+                Guardar reserva
+            </button>
+        </div>
+
+    </form>
+
+</dialog>
+
+
+    </main>
+
+
+    <!-- JAVASCRIPT -->
+    <script type="module" src="assets/js/reservas.js"></script>
+
+</body>
+
+</html>
